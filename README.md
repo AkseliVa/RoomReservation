@@ -1,3 +1,17 @@
+# HOX
+Sisällytin tietoisesti 2 "PROMPTIT.md"-tiedostoa. Halusin eriyttää kahden tekoälyn kanssa käydyt keskustelut.
+
+"PROMPTIT.md"-keskustelussa on käytetty VsCoden sisäänrakennettua CoPilottia.
+
+"PROMPTIT2.md"-keskustelussa on käytetty Google Gemini 3 - mallia.
+
+Halusin käyttää kahta erilllistä tekoälyä, jotta saan kattavamman hyödyn niistä. CoPilottia käytin vain koodin tekemiseen, jonka jälkeen käytin Geminiä katselmoimaan koodia, selittämään sitä ja korjaamaan virhetilanteita.
+
+# HOXHOX
+Oletin aikavyöhyke tarkistuksen tulevan käyttäjänäkymä-puolelta, minkä takia pitäydyin UTC-ajassa varausten tekemisessä.
+
+Automaattitestien lisäksi tein jatkuvasti manuaalista testausta Postmanilla, pääasiassa kokeillen varausten luomisen aikojen tarkistusta, mutta myös GET- ja DELETE-pyynnöt tuli testattua useaan otteeseen.
+
 # Meeting Room Reservation API
 
 A TypeScript Node.js backend API for managing meeting room reservations using an in-memory database.
