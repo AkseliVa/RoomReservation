@@ -13,9 +13,11 @@ router.post('/', (req, res) => {
   const end = new Date(endTime);
   const now = new Date();
 
-  if (start.getTime() >= end.getTime()) {
-    return res.status(400).json({ error: 'Start time must be before end time' });
-  }
+  const isStartBeforeEnd = () => {
+    if (start.getTime() >= end.getTime()) {
+     return res.status(400).json({ error: 'Start time must be before end time' });
+    };
+  };
 
   if (start.getTime() < now.getTime()) {
     return res.status(400).json({ error: 'Cannot reserve in the past' });
