@@ -115,3 +115,21 @@ This should not be possible since the "startTime" of the POST request is in the 
 
 ## Assistant Response 7
 The code has been updated to treat the startTime and endTime as local times by removing the 'Z' suffix before parsing. This ensures comparisons are done in the user's current timezone. The project has been rebuilt, and the server needs to be restarted to apply the changes.
+
+## User Message 8
+Build tests for the application. The tests should have 1 succeeding post test and failing tests for missing values, start time being before endtime and overlapping reservations.
+
+Also create a succeeding get/id test.
+
+As well as a succeeding DELETE test and a failing DELETE test where the specified reservation id does not exist
+
+## Assistant Response 8
+Tests have been created using Jest and Supertest. The test suite includes:
+
+- A successful POST test for creating a reservation.
+- Failing POST tests for missing required fields, invalid time order (start after end), and overlapping reservations.
+- A successful GET test for retrieving reservations by room ID.
+- A successful DELETE test for removing a reservation.
+- A failing DELETE test for attempting to delete a non-existent reservation.
+
+All tests are passing. The test file is located at `__tests__/reservations.test.ts`.

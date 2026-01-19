@@ -67,3 +67,4 @@ router.get('/room/:roomId', (req, res) => {
 });
 
 export default router;
+export { reservations };
