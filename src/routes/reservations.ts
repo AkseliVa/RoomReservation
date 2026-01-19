@@ -9,15 +9,15 @@ let idCounter = 1;
 router.post('/', (req, res) => {
   const { roomId, startTime, endTime, userId } = req.body;
 
-  const start = new Date(startTime.replace(/Z$/, ''));
-  const end = new Date(endTime.replace(/Z$/, ''));
+  const start = new Date(startTime);
+  const end = new Date(endTime);
   const now = new Date();
 
-  if (start >= end) {
+  if (start.getTime() >= end.getTime()) {
     return res.status(400).json({ error: 'Start time must be before end time' });
   }
 
-  if (start < now) {
+  if (start.getTime() < now.getTime()) {
     return res.status(400).json({ error: 'Cannot reserve in the past' });
   }
 
