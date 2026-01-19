@@ -22,8 +22,19 @@ router.post('/', (req, res) => {
   }
 
   // Check for overlapping reservations
-  const overlapping = reservations.find(r => r.roomId === roomId && !(r.endTime <= start || end <= r.startTime));
-  if (overlapping) {
+  const isOverLapping = reservations.some(existing => {
+    if (existing.roomId !== roomId) return false;
+
+    const startsDuring = start >= existing.startTime && start < existing.endTime;
+
+    const endsDuring = end > existing.startTime && end <= existing.endTime;
+
+    const encloses = start <= existing.startTime && end >= existing.endTime;
+
+    return startsDuring || endsDuring || encloses;
+  });
+  
+  if (isOverLapping) {
     return res.status(400).json({ error: 'Reservation overlaps with existing one' });
   }
 
