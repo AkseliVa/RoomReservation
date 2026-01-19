@@ -9,41 +9,31 @@ let idCounter = 1;
 router.post('/', (req, res) => {
   const { roomId, startTime, endTime, userId } = req.body;
 
+  if (!roomId || !startTime || !endTime || !userId) {
+    return res.status(400).json({ error: 'Kaikki kentät ovat pakollisia.' });
+  }
+
   const start = new Date(startTime);
   const end = new Date(endTime);
   const now = new Date();
-
-  const isStartBeforeEnd = () => {
-    if (start.getTime() >= end.getTime()) {
-     return res.status(400).json({ error: 'Start time must be before end time' });
-    };
-    return true;
-  };
-
-  const isEndBeforeNow = () => {
-    if (end.getTime() < now.getTime()) {
-        return res.status(400).json({ error: 'Cannot reserve in the past' });
-    };
-    return true;
+  
+  if (start >= end) {
+    return res.status(400).json({ error: 'Alkuajan on oltava ennen loppuaikaa.' });
   }
 
-  
+  if (start < now) {
+    return res.status(400).json({ error: 'Varausta ei voi tehdä menneisyyteen.' });
+  }
 
-  // Check for overlapping reservations
-  const isOverLapping = reservations.some(existing => {
+  const isOverlapping = reservations.some(existing => {
     if (existing.roomId !== roomId) return false;
 
-    const startsDuring = start >= existing.startTime && start < existing.endTime;
-
-    const endsDuring = end > existing.startTime && end <= existing.endTime;
-
-    const encloses = start <= existing.startTime && end >= existing.endTime;
-
-    return startsDuring || endsDuring || encloses;
+    const overlaps = start < existing.endTime && end > existing.startTime;
+    return overlaps;
   });
-  
-  if (isOverLapping) {
-    return res.status(400).json({ error: 'Reservation overlaps with existing one' });
+
+  if (isOverlapping) {
+    return res.status(400).json({ error: 'Huone on jo varattu valitulla aikavälillä.' });
   }
 
   const reservation: Reservation = {
@@ -57,7 +47,7 @@ router.post('/', (req, res) => {
   reservations.push(reservation);
   idCounter++;
 
-  res.status(201).json(reservation);
+  return res.status(201).json(reservation);
 });
 
 router.delete('/:id', (req, res) => {
