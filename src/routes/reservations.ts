@@ -9,8 +9,8 @@ let idCounter = 1;
 router.post('/', (req, res) => {
   const { roomId, startTime, endTime, userId } = req.body;
 
-  const start = new Date(startTime);
-  const end = new Date(endTime);
+  const start = new Date(startTime.replace(/Z$/, ''));
+  const end = new Date(endTime.replace(/Z$/, ''));
   const now = new Date();
 
   if (start >= end) {

@@ -101,3 +101,19 @@ The file has been updated with the complete conversation history. It now include
 
 PROMPTIT.md
 The file has been updated with the complete conversation history. It now includes all messages from the chat.
+
+The "now"-variable uses the default Date timezone UTC. This is wrong. The code should use the users current timezone.
+
+Example: I am in Finland, the time is 10.23 currently, but I am able to make a reservation with these values:
+
+{
+"roomId": "neukkari-1",
+"startTime": "2026-01-19T09:00:00Z",
+"endTime": "2026-01-19T09:20:00Z",
+"userId": "user-123"
+}
+
+This should not be possible since the "startTime" of the POST request is in the past.
+
+## Assistant Response 7
+The code has been updated to treat the startTime and endTime as local times by removing the 'Z' suffix before parsing. This ensures comparisons are done in the user's current timezone. The project has been rebuilt, and the server needs to be restarted to apply the changes.
