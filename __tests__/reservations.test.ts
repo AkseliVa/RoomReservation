@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../src/index';
-import { reservations } from '../src/routes/reservations';
+import { reservations } from '../src/services/reservationsService';
 
 describe('Reservations API', () => {
   beforeEach(() => {
