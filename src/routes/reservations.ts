@@ -17,11 +17,17 @@ router.post('/', (req, res) => {
     if (start.getTime() >= end.getTime()) {
      return res.status(400).json({ error: 'Start time must be before end time' });
     };
+    return true;
   };
 
-  if (start.getTime() < now.getTime()) {
-    return res.status(400).json({ error: 'Cannot reserve in the past' });
+  const isEndBeforeNow = () => {
+    if (end.getTime() < now.getTime()) {
+        return res.status(400).json({ error: 'Cannot reserve in the past' });
+    };
+    return true;
   }
+
+  
 
   // Check for overlapping reservations
   const isOverLapping = reservations.some(existing => {
